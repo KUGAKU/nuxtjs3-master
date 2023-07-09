@@ -1,63 +1,33 @@
-# Nuxt 3 Minimal Starter
+# Nuxtjs3 Master
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Directories with Roles
 
-## Setup
+1. components: コンポーネントを配置する為に使用する
+2. pages: ファイルベースルーティングを実現する為に使用する
+3. layouts: 共通レイアウトを実現する為に使用する
 
-Make sure to install the dependencies:
+### about pages directory
 
-```bash
-# npm
-npm install
+- ファイル名とパスが対応する形でルーティングを実現する
+- 例えば、about.vue ファイルを作成すれば、localhost:3000/about にて、内容が確認できる。※app.vue に pages ディレクトリの内容を表示する設定をしている時のみ →`<NuxtPage />`
 
-# pnpm
-pnpm install
+### about layouts directory
 
-# yarn
-yarn install
-```
+- 全てページに必ず表示したい共通の内容（ナビゲーションバー）などを管理するには、このフォルダの中に記載をする。名前は default.vue である必要がある。※app.vue に layouts ディレクトリの内容を表示する設定をしている時のみ →`<NuxtLayout><NuxtPage /></NuxtLayout>`
+- ↓ の記述によって特定のファイルのみ共通のレイアウトを適応しない設定ができる
 
-## Development Server
+- `<script setup>
+  definePageMeta({
+    layout: false,
+  });
+</script>
+`
 
-Start the development server on `http://localhost:3000`:
+- カスタムレイアウトを適応したい場合は、custom.vue などを作成し、以下のように適応したい vue ファイルに記述する。
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- `<script setup>
+  definePageMeta({
+    layout: 'custom',
+  });
+</script>
+`
