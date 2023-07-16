@@ -1,7 +1,6 @@
 import {
   AuthenticationResult,
   Configuration,
-  InteractionRequiredAuthError,
   LogLevel,
   PublicClientApplication,
   RedirectRequest,
@@ -54,29 +53,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   return {
     provide: {
       login: async () => {
-        const account = msal.getAllAccounts()[0];
-
-        const accessTokenRequest = {
-          scopes: ["openid"],
-          account: account,
-        };
-
-        msal
-          .acquireTokenSilent(accessTokenRequest)
-          .then(function (accessTokenResponse) {
-            // Acquire token silent success
-            // Call API with token
-            let accessToken = accessTokenResponse.accessToken;
-            // Call your API with token
-            console.log(accessToken);
-          })
-          .catch(function (error) {
-            //Acquire token silent failure, and send an interactive request
-            console.log(error);
-            if (error instanceof InteractionRequiredAuthError) {
-              msal.acquireTokenRedirect(accessTokenRequest);
-            }
-          });
+        await msal.loginRedirect();
       },
     },
   };
