@@ -9,7 +9,14 @@
 
       <v-toolbar-title>Nuxt Master</v-toolbar-title>
     </v-app-bar>
-    <slot />
+
+    <v-main>
+      <v-container fill-height>
+        <v-row justify="center">
+          <slot />
+        </v-row>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 
