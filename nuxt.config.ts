@@ -1,3 +1,6 @@
+import { HookResult, ViteConfig } from "nuxt/schema";
+import vuetify from "vite-plugin-vuetify";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -10,9 +13,22 @@ export default defineNuxtConfig({
       aadb2cRedirectUri: "",
     },
   },
-  css: ["@/assets/main.scss"],
+  css: ["@/assets/main.scss", "@mdi/font/css/materialdesignicons.css"],
   ssr: false,
   build: {
     transpile: ["vuetify"],
   },
+  modules: [
+    async (options, nuxt) => {
+      nuxt.hooks.hook("vite:extendConfig", (config): any => {
+        const vuetifyPlugin = vuetify();
+        if (config.plugins) {
+          config.plugins.push(vuetifyPlugin);
+        } else {
+          config.plugins = [vuetifyPlugin];
+        }
+        return config;
+      });
+    },
+  ],
 });
