@@ -37,18 +37,17 @@ export default defineNuxtPlugin((nuxtApp) => {
   };
   const msal = new PublicClientApplication(msalConfig);
 
-  msal
-    .handleRedirectPromise()
-    .then((result: AuthenticationResult | null) => {
-      if (result == null) {
-        console.warn("login process is incorrect.");
-        return;
-      }
-      console.log(JSON.stringify(result));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  // msal
+  //   .handleRedirectPromise()
+  //   .then((result: AuthenticationResult | null) => {
+  //     if (result == null) {
+  //       return;
+  //     }
+  //     console.log(JSON.stringify(result));
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
 
   return {
     provide: {
