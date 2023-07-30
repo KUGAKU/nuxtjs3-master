@@ -16,19 +16,38 @@
 
     <v-footer app>
       <v-text-field hide-details="auto" class="mr-6"></v-text-field>
-      <v-btn icon="$vuetify"></v-btn>
+      <v-btn icon="$vuetify" @click="sendMessage"></v-btn>
     </v-footer>
   </v-app>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+// const { count, inc, dec } = useCounter(100);
 
-const drawer = ref(false);
-</script>
+const drawer = ref(true);
 
-<script lang="ts">
-export default {
-  data: () => ({ drawer: false }),
+// const sendMessage = () => {
+//   console.log("send message");
+//   console.log("count", count.value);
+//   inc();
+// };
+
+const sendMessage = async () => {
+  console.log("send message");
+  const response = await fetch("http://127.0.0.1:8000/chat/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/event-stream",
+    },
+  });
+  const reader = response.body
+    ?.pipeThrough(new TextDecoderStream())
+    .getReader();
+  while (true) {
+    const { value, done } = await reader?.read();
+    if (done) break;
+    console.log("Received", value);
+  }
 };
 </script>
