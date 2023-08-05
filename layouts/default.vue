@@ -47,7 +47,8 @@ const sendMessage = async () => {
   while (true) {
     const { value, done } = await reader?.read();
     if (done) break;
-    console.log("Received", value);
+    const currentTime: Date = new Date();
+    console.log(`Received: ${currentTime.getMilliseconds()}`, value);
   }
 };
 </script>
