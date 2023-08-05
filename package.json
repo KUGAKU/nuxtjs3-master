@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^2.38.0",
-    "@mdi/font": "^7.2.96"
+    "@mdi/font": "^7.2.96",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.8.0"
   }
 }
