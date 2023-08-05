@@ -1,5 +1,7 @@
 <template>
-  <TypewriterEffect text="" />
+  <TypewriterEffect />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const chatResponse = ref('');
+</script>

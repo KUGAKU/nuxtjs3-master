@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <NavigationDrawer></NavigationDrawer>
+    <NavigationDrawer />
 
     <v-main>
       <v-container>
@@ -8,7 +8,7 @@
       </v-container>
     </v-main>
 
-    <Footer></Footer>
+    <ChatTextFieldFooter />
   </v-app>
 </template>
 
