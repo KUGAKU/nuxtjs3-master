@@ -23,12 +23,11 @@ export function useChat() {
         },
         error: (err) => console.error('something wrong occurred: ' + err),
         complete: () => {
-          console.log('done');
           isLoading.value = false;
         },
       });
       const eventSource = new EventSource('http://127.0.0.1:8000/chat/');
-      chatRepository.listenToSSEChatMessage(eventSource);
+      chatRepository.listenToSSEChatMessage(eventSource, chatMessageDataSource);
     } catch (error) {
       console.error(error);
     } finally {

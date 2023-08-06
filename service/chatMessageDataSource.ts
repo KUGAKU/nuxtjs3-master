@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs';
-import { injectable, singleton } from 'tsyringe';
+import { singleton } from 'tsyringe';
 
 export interface IChatMessageDataSource {
   getDataStream(): Observable<string>;
@@ -15,15 +15,24 @@ export class ChatMessageDataSource implements IChatMessageDataSource {
     this.subject = new Subject<string>();
   }
 
+  private recreateSubjectIfNecessary(): void {
+    // subjectがcompleteされている場合は新しいSubjectを作成
+    if (this.subject.closed) {
+      this.subject = new Subject<string>();
+    }
+  }
+
   getDataStream(): Observable<string> {
+    this.recreateSubjectIfNecessary();
     return this.subject.asObservable();
   }
 
   pushData(data: string): void {
+    this.recreateSubjectIfNecessary();
     this.subject.next(data);
   }
 
   complete(): void {
-    this.subject.complete();
+    this.subject.unsubscribe();
   }
 }
