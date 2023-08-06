@@ -27,7 +27,8 @@ export function useChat() {
           isLoading.value = false;
         },
       });
-      await chatRepository.listenToSSEChatMessage();
+      const eventSource = new EventSource('http://127.0.0.1:8000/chat/');
+      chatRepository.listenToSSEChatMessage(eventSource);
     } catch (error) {
       console.error(error);
     } finally {
