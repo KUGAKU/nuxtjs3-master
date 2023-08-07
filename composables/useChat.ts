@@ -14,7 +14,7 @@ export function useChat() {
   );
   const chatRepository = container.resolve<IChatRepository>(ChatRepository);
 
-  const listenToChatMessage = async () => {
+  const listenToChatMessage = async (chatMessage: string) => {
     isLoading.value = true;
     try {
       chatMessageDataSource.getDataStream().subscribe({
@@ -26,7 +26,9 @@ export function useChat() {
           isLoading.value = false;
         },
       });
-      const eventSource = new EventSource('http://127.0.0.1:8000/chat/');
+      const eventSource = new EventSource(
+        `http://127.0.0.1:8000/chat/?chatMessage=${chatMessage}`
+      );
       chatRepository.listenToSSEChatMessage(eventSource, chatMessageDataSource);
     } catch (error) {
       console.error(error);
