@@ -18,7 +18,7 @@ export class ChatRepository implements IChatRepository {
     chatMessageDataSource: IChatMessageDataSource
   ) {
     eventSource.onopen = (event) => {
-      console.log('EventSource Connection Opened:', event);
+      console.info('EventSource Connection Opened:', event);
     };
     eventSource.onerror = (err) => {
       console.error('EventSource Error:', err);

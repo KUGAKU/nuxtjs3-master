@@ -6,6 +6,7 @@ import { ChatRepository, IChatRepository } from '../repository/chatRepository';
 import { container } from 'tsyringe';
 
 export function useChat() {
+  const runtimeConfig = useRuntimeConfig();
   const chatResponseData = useState('chatResponseDataKey', () => '');
   const isLoading = useState('isLoadingKey', () => false);
 
@@ -27,7 +28,7 @@ export function useChat() {
         },
       });
       const eventSource = new EventSource(
-        `http://127.0.0.1:8000/chat/?chatMessage=${chatMessage}`
+        `${runtimeConfig.public.backend_api_base_url}chat/?chatMessage=${chatMessage}`
       );
       chatRepository.listenToSSEChatMessage(eventSource, chatMessageDataSource);
     } catch (error) {

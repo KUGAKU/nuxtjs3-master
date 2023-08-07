@@ -6,9 +6,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
+      backend_api_base_url: '',
       aadb2cClientId: '',
       aadb2cAuthority: '',
-      aadb2cScopes: '',
       aadb2cAuthorityDomain: '',
       aadb2cRedirectUri: '',
     },
