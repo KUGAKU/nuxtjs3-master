@@ -1,10 +1,10 @@
-import { createVuetify } from "vuetify";
+import { createVuetify } from 'vuetify';
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(
     createVuetify({
       icons: {
-        defaultSet: "mdi",
+        defaultSet: 'mdi',
       },
     })
   );

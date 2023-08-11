@@ -4,7 +4,7 @@ import {
   LogLevel,
   PublicClientApplication,
   RedirectRequest,
-} from "@azure/msal-browser";
+} from '@azure/msal-browser';
 
 export default defineNuxtPlugin((nuxtApp) => {
   const runtimeConfig = useRuntimeConfig();
@@ -19,16 +19,16 @@ export default defineNuxtPlugin((nuxtApp) => {
         loggerCallback: (level: LogLevel, message: string) => {
           switch (level) {
             case LogLevel.Error:
-              console.error("system[Error]:", message);
+              console.error('system[Error]:', message);
               return;
             case LogLevel.Info:
-              console.info("system[Info]:", message);
+              console.info('system[Info]:', message);
               return;
             case LogLevel.Verbose:
-              console.debug("system[Verbose]:", message);
+              console.debug('system[Verbose]:', message);
               return;
             case LogLevel.Warning:
-              console.warn("system:[Warning]", message);
+              console.warn('system:[Warning]', message);
               return;
           }
         },

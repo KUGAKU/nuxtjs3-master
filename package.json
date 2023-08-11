@@ -11,15 +11,25 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@types/node": "^18.16.19",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "@vue/eslint-config-typescript": "^11.0.3",
     "autoprefixer": "^10.4.14",
+    "eslint": "^8.46.0",
+    "eslint-plugin-nuxt": "^4.0.0",
+    "eslint-plugin-vue": "^9.16.1",
     "nuxt": "^3.6.2",
     "postcss": "^8.4.25",
+    "prettier": "3.0.1",
     "sass": "^1.63.6",
     "vite-plugin-vuetify": "^1.0.2",
     "vuetify": "^3.3.8"
   },
   "dependencies": {
     "@azure/msal-browser": "^2.38.0",
-    "@mdi/font": "^7.2.96"
+    "@mdi/font": "^7.2.96",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1",
+    "tsyringe": "^4.8.0"
   }
 }
