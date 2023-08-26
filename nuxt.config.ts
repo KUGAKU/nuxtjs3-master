@@ -6,7 +6,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      backend_api_base_url: '',
+      backendApiBaseUrl: '',
+      typeWritingInterval: 50,
       aadb2cClientId: '',
       aadb2cAuthority: '',
       aadb2cAuthorityDomain: '',
