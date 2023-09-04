@@ -1,7 +1,7 @@
 <template>
-  <TypewriterEffect />
+  <Messages :messages="messages" />
 </template>
 
 <script setup lang="ts">
-const chatResponse = ref('');
+const { messages } = useChat();
 </script>

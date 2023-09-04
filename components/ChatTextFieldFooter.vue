@@ -3,19 +3,27 @@
     <v-text-field
       hide-details="auto"
       class="mr-6"
-      v-model="chatMessage"
+      v-model="message"
+      @keypress.enter.exact="sendMessage"
     ></v-text-field>
     <v-btn icon="$vuetify" @click="sendMessage"></v-btn>
   </v-footer>
 </template>
 
 <script setup lang="ts">
+import { MessageType } from '../types/conversation';
 import { useChat } from '../composables/useChat';
 
-const { listenToChatMessage, isLoading } = useChat();
-const chatMessage = ref('');
+const { listenToChatMessage, addHumanMessageToMessages } = useChat();
+const message = ref('');
 
-const sendMessage = async () => {
-  listenToChatMessage(chatMessage.value);
+const clearChatMessage = () => {
+  message.value = '';
+};
+
+const sendMessage = () => {
+  listenToChatMessage(message.value);
+  addHumanMessageToMessages(message.value);
+  clearChatMessage();
 };
 </script>

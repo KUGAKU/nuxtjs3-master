@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       backendApiBaseUrl: '',
-      typeWritingInterval: 50,
+      typeWritingInterval: 100,
       aadb2cClientId: '',
       aadb2cAuthority: '',
       aadb2cAuthorityDomain: '',

@@ -3,21 +3,29 @@
 </template>
 
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig();
-const { chatResponseData } = useChat();
+interface Props {
+  message: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  message: undefined,
+});
 
+const runtimeConfig = useRuntimeConfig();
+const message = ref(props.message);
 const currentIndex = ref(0);
 const displayedText = computed(() =>
-  chatResponseData.value.slice(0, currentIndex.value)
+  message.value.slice(0, currentIndex.value)
 );
 
-watch(chatResponseData, () => {
-  const typeCharacter = () => {
-    if (currentIndex.value < chatResponseData.value.length) {
-      currentIndex.value++;
-      setTimeout(typeCharacter, runtimeConfig.public.typeWritingInterval); // 50msのディレイで次の文字をタイプ
-    }
-  };
+const typeCharacter = () => {
+  if (currentIndex.value < message.value.length) {
+    currentIndex.value++;
+    setTimeout(typeCharacter, runtimeConfig.public.typeWritingInterval); // デフォルト50msのディレイで次の文字をタイプ
+  }
+};
+
+watchEffect(() => {
+  message.value = props.message;
   typeCharacter();
 });
 </script>

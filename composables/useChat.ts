@@ -4,29 +4,52 @@ import {
 } from '../service/chatMessageDataSource';
 import { ChatRepository, IChatRepository } from '../repository/chatRepository';
 import { container } from 'tsyringe';
+import { Message, MessageType } from '../types/conversation';
 
 export function useChat() {
   const runtimeConfig = useRuntimeConfig();
-  const chatResponseData = useState('chatResponseDataKey', () => '');
-  const isLoading = useState('isLoadingKey', () => false);
-  const conversationId = useState<string | null>(
-    'conversationIdKey',
-    () => null
-  );
 
   const chatMessageDataSource = container.resolve<IChatMessageDataSource>(
     ChatMessageDataSource
   );
   const chatRepository = container.resolve<IChatRepository>(ChatRepository);
 
-  // 新しい会話を作成する時に呼び出す
-  const clearConversationId = () => {
-    conversationId.value = null;
+  const messages = useState<Message[]>('messagesKey', () => []);
+  const isLoading = useState<boolean>('isLoadingKey', () => false);
+  const conversationId = useState<string | null>(
+    'conversationIdKey',
+    () => null
+  );
+
+  // when user send message, call this function to add human message and ai message to messages
+  const addHumanMessageToMessages = (message: string) => {
+    messages.value.push({
+      messageContent: message,
+      messageType: MessageType.HUMAN,
+    });
   };
 
-  // 会話を選択した時に呼び出す
-  const setConversationId = (targetConversationId: string) => {
-    conversationId.value = targetConversationId;
+  const isAIMessageTurn = (messagesLastIndex: number) => {
+    if (messages.value[messagesLastIndex].messageType === MessageType.HUMAN) {
+      return true;
+    }
+    return false;
+  };
+
+  const streamAICharToMessages = (message: string) => {
+    const messagesLastIndex = messages.value.length - 1; // get last index of messages.
+    if (isAIMessageTurn(messagesLastIndex)) {
+      messages.value.push({
+        messageContent: message,
+        messageType: MessageType.ARTIFICIAL_INTELLIGENCE,
+      });
+    }
+    messages.value[messagesLastIndex].messageContent += message; // update messageContent of last index of messages.
+  };
+
+  // when user create new conversation, call this function to clear conversationId
+  const clearConversationId = () => {
+    conversationId.value = null;
   };
 
   const listenToChatMessage = async (chatMessage: string) => {
@@ -34,7 +57,7 @@ export function useChat() {
     try {
       chatMessageDataSource.getDataStream().subscribe({
         next: (data) => {
-          chatResponseData.value += data.chat_content;
+          streamAICharToMessages(data.chat_content);
           conversationId.value = data.conversation_id;
         },
         error: (err) => console.error('something wrong occurred: ' + err),
@@ -54,9 +77,10 @@ export function useChat() {
   };
 
   return {
-    chatResponseData,
-    listenToChatMessage,
+    messages,
     isLoading,
+    listenToChatMessage,
     clearConversationId,
+    addHumanMessageToMessages,
   };
 }

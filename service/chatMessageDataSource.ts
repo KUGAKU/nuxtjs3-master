@@ -17,7 +17,7 @@ export class ChatMessageDataSource implements IChatMessageDataSource {
   }
 
   private recreateSubjectIfNecessary(): void {
-    // subjectがcompleteされている場合は新しいSubjectを作成
+    // because subject is not working after closed(completed)
     if (this.subject.closed) {
       this.subject = new Subject<ChatSSEData>();
     }

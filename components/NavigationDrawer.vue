@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" location="left" temporary>
+  <v-navigation-drawer v-model="drawer" location="left" temporary app>
     <div class="d-flex flex-column space-between">
       <v-row>
         <v-col cols="12">
@@ -13,10 +13,10 @@
     </div>
     <v-list :items="items"></v-list>
   </v-navigation-drawer>
-  <v-app-bar>
+  <v-app-bar app>
     <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-    <v-toolbar-title>Nuxt Master</v-toolbar-title>
+    <v-toolbar-title>Enterprise Chat</v-toolbar-title>
   </v-app-bar>
 </template>
 
