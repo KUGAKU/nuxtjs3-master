@@ -77,8 +77,8 @@ export function useChat() {
   };
 
   return {
-    messages,
-    isLoading,
+    messages: readonly(messages),
+    isLoading: readonly(isLoading),
     listenToChatMessage,
     clearConversationId,
     addHumanMessageToMessages,

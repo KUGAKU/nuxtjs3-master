@@ -3,6 +3,11 @@ import vuetify from 'vite-plugin-vuetify';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  vite: {
+    esbuild: {
+      pure: ['console.log', 'console.info', 'console.debug', 'console.warn'],
+    },
+  },
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
@@ -12,6 +17,7 @@ export default defineNuxtConfig({
       aadb2cAuthority: '',
       aadb2cAuthorityDomain: '',
       aadb2cRedirectUri: '',
+      aadb2cScope: '',
     },
   },
   css: ['@/assets/main.scss', '@mdi/font/css/materialdesignicons.css'],

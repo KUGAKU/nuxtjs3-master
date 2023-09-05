@@ -1,18 +1,20 @@
 import {
-  AuthenticationResult,
   Configuration,
   LogLevel,
   PublicClientApplication,
-  RedirectRequest,
 } from '@azure/msal-browser';
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(async (nuxtApp) => {
   const runtimeConfig = useRuntimeConfig();
   const msalConfig: Configuration = {
     auth: {
       clientId: runtimeConfig.public.aadb2cClientId,
       authority: runtimeConfig.public.aadb2cAuthority,
       knownAuthorities: [runtimeConfig.public.aadb2cAuthorityDomain],
+    },
+    cache: {
+      cacheLocation: 'sessionStorage',
+      storeAuthStateInCookie: false,
     },
     system: {
       loggerOptions: {
@@ -22,13 +24,13 @@ export default defineNuxtPlugin((nuxtApp) => {
               console.error('system[Error]:', message);
               return;
             case LogLevel.Info:
-              console.info('system[Info]:', message);
+              //console.info('system[Info]:', message);
               return;
             case LogLevel.Verbose:
-              console.debug('system[Verbose]:', message);
+              //console.debug('system[Verbose]:', message);
               return;
             case LogLevel.Warning:
-              console.warn('system:[Warning]', message);
+              //console.warn('system:[Warning]', message);
               return;
           }
         },
@@ -37,23 +39,12 @@ export default defineNuxtPlugin((nuxtApp) => {
   };
   const msal = new PublicClientApplication(msalConfig);
 
-  // msal
-  //   .handleRedirectPromise()
-  //   .then((result: AuthenticationResult | null) => {
-  //     if (result == null) {
-  //       return;
-  //     }
-  //     console.log(JSON.stringify(result));
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
+  const result = await msal.handleRedirectPromise();
+  console.log(JSON.stringify(result));
 
   return {
     provide: {
-      login: async () => {
-        await msal.loginRedirect();
-      },
+      msal,
     },
   };
 });
