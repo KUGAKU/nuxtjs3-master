@@ -4,6 +4,7 @@ import {
 } from '@microsoft/fetch-event-source';
 import { IChatMessageDataSource } from '../service/chatMessageDataSource';
 import { injectable } from 'tsyringe';
+import { useAuth } from '../composables/useAuth';
 
 enum ChatSSEEvent {
   PROGRESSION = 'progression', // SSEによってチャットメッセージを送信している事を示します。
@@ -31,11 +32,13 @@ export class ChatRepository implements IChatRepository {
     chatMessageDataSource: IChatMessageDataSource,
     conversationId: string | null
   ) {
+    const { accessToken } = useAuth();
     const runtimeConfig = useRuntimeConfig();
     fetchEventSource(`${runtimeConfig.public.backendApiBaseUrl}chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken.value}`,
       },
       body: JSON.stringify({
         conversation_id: conversationId,
@@ -43,29 +46,20 @@ export class ChatRepository implements IChatRepository {
       }),
 
       async onopen(response) {
-        console.info('EventSource Connection Opened:', response);
+        console.info('fetchEventSource Connection Opened:', response);
         if (
           response.ok &&
           response.headers.get('content-type') === EventStreamContentType
         ) {
-          return; // everything's good
+          return;
         }
-        // else if (
-        //   response.status >= 400 &&
-        //   response.status < 500 &&
-        //   response.status !== 429
-        // ) {
-        //   console.log('client error');
-        // } else {
-        //   console.log('retrying');
-        // }
       },
 
       onmessage(event) {
         //console.info('event:', event);
         const data: ChatSSEData = JSON.parse(event.data);
         if (event.event === ChatSSEEvent.COMPLETE) {
-          console.info('EventSource Complete:', event);
+          console.info('fetchEventSource Complete:', event);
           chatMessageDataSource.pushData(data);
           chatMessageDataSource.complete();
           // TODO: ここでeventSource.close()のような処理を行う。
@@ -78,8 +72,9 @@ export class ChatRepository implements IChatRepository {
       },
 
       onerror(err) {
-        console.error('EventSource Error:', err);
+        console.error('fetchEventSource Error:', err);
         chatMessageDataSource.complete();
+        throw err;
       },
     });
 
