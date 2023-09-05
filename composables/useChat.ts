@@ -7,8 +7,6 @@ import { container } from 'tsyringe';
 import { Message, MessageType } from '../types/conversation';
 
 export function useChat() {
-  const runtimeConfig = useRuntimeConfig();
-
   const chatMessageDataSource = container.resolve<IChatMessageDataSource>(
     ChatMessageDataSource
   );
@@ -65,10 +63,14 @@ export function useChat() {
           isLoading.value = false;
         },
       });
-      const eventSource = new EventSource(
-        `${runtimeConfig.public.backendApiBaseUrl}chat/?conversation_id=${conversationId.value}&chat_message=${chatMessage}`
+      // const eventSource = new EventSource(
+      //   `${runtimeConfig.public.backendApiBaseUrl}chat/?conversation_id=${conversationId.value}&chat_message=${chatMessage}`
+      // );
+      chatRepository.listenToSSEChatMessage(
+        chatMessage,
+        chatMessageDataSource,
+        conversationId.value
       );
-      chatRepository.listenToSSEChatMessage(eventSource, chatMessageDataSource);
     } catch (error) {
       console.error(error);
     } finally {

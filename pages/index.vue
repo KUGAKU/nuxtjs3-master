@@ -7,6 +7,7 @@ definePageMeta({
 
 import { useAuth } from '../composables/useAuth';
 const { checkAuth, loginRedirect, acquireAccessToken } = useAuth();
+const router = useRouter();
 
 const accounts = checkAuth();
 if (accounts.length === 0) {
@@ -17,5 +18,6 @@ if (accounts.length === 0) {
   // acquire and store access token to global value by useState.
   await acquireAccessToken(accounts[0]);
   // go to initial page.
+  router.push('/chat');
 }
 </script>
