@@ -38,7 +38,7 @@ export class ChatRepository implements IChatRepository {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken.value}`,
+        'Authorization': `Bearer ${accessToken.value}`,
       },
       body: JSON.stringify({
         conversation_id: conversationId,
