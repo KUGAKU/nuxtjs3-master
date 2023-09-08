@@ -13,7 +13,7 @@
 import { MessageType, Message } from '../types/conversation';
 
 interface Props {
-  messages: Message[];
+  messages: readonly Message[];
 }
 
 withDefaults(defineProps<Props>(), {
