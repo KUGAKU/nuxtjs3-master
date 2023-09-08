@@ -27,7 +27,7 @@ export function useChat() {
     });
   };
 
-  const isAIMessageTurn = (messagesLastIndex: number) => {
+  const isAIMessageFirstTurn = (messagesLastIndex: number) => {
     if (messages.value[messagesLastIndex].messageType === MessageType.HUMAN) {
       return true;
     }
@@ -36,7 +36,7 @@ export function useChat() {
 
   const streamAICharToMessages = (message: string) => {
     const messagesLastIndex = messages.value.length - 1; // get last index of messages.
-    if (isAIMessageTurn(messagesLastIndex)) {
+    if (isAIMessageFirstTurn(messagesLastIndex)) {
       messages.value.push({
         messageContent: message,
         messageType: MessageType.ARTIFICIAL_INTELLIGENCE,

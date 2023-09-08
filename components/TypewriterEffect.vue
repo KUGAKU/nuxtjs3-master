@@ -3,6 +3,9 @@
 </template>
 
 <script setup lang="ts">
+import { watch, ref, computed } from 'vue';
+
+const runtimeConfig = useRuntimeConfig();
 interface Props {
   message: string;
 }
@@ -10,24 +13,44 @@ const props = withDefaults(defineProps<Props>(), {
   message: undefined,
 });
 
-const runtimeConfig = useRuntimeConfig();
-const message = ref(props.message);
 const currentIndex = ref(0);
+const isTyping = ref(false);
 const displayedText = computed(() =>
-  message.value.slice(0, currentIndex.value)
+  props.message.slice(0, currentIndex.value)
 );
 
+const isNotFullyDisplayed = () => {
+  if (currentIndex.value < props.message.length) {
+    return true;
+  }
+  return false;
+};
+
 const typeCharacter = () => {
-  if (currentIndex.value < message.value.length) {
+  if (isNotFullyDisplayed()) {
     currentIndex.value++;
-    setTimeout(typeCharacter, runtimeConfig.public.typeWritingInterval); // デフォルト50msのディレイで次の文字をタイプ
+    if (isNotFullyDisplayed()) {
+      setTimeout(typeCharacter, runtimeConfig.public.typeWritingSpeed);
+    } else {
+      isTyping.value = false;
+    }
   }
 };
 
-watchEffect(() => {
-  message.value = props.message;
-  typeCharacter();
-});
+watch(
+  () => props.message,
+  (newMessage, oldMessage) => {
+    if (!isTyping.value) {
+      if ((oldMessage?.length || 0) < newMessage.length) {
+        isTyping.value = true;
+        typeCharacter();
+      } else {
+        currentIndex.value = 0;
+      }
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>
