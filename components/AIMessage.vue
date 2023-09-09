@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center bg-grey-darken-1 pt-4 pr-4 pb-4 pl-4">
+  <div class="bg-grey-darken-1 pt-4 pr-4 pb-4 pl-4">
     <TypewriterEffect :message="message" />
   </div>
 </template>

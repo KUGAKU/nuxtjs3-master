@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { MessageType } from '../types/conversation';
 import { useChat } from '../composables/useChat';
 
 const { listenToChatMessage, addHumanMessageToMessages } = useChat();

@@ -1,5 +1,5 @@
 <template>
-  <div class="break-word">{{ displayedText }}</div>
+  <div class="break-word limited-width">{{ displayedText }}</div>
 </template>
 
 <script setup lang="ts">
@@ -57,5 +57,9 @@ watch(
 .break-word {
   overflow-wrap: break-word;
   word-wrap: break-word;
+}
+.limited-width {
+  width: 700px;
+  margin: 0 auto; /* 中央揃え */
 }
 </style>
