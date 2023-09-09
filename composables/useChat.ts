@@ -45,6 +45,11 @@ export function useChat() {
     messages.value[messagesLastIndex].messageContent += message; // update messageContent of last index of messages.
   };
 
+  // when user create new conversation, call this function to clear messages
+  const clearMessages = () => {
+    messages.value = [];
+  };
+
   // when user create new conversation, call this function to clear conversationId
   const clearConversationId = () => {
     conversationId.value = null;
@@ -84,5 +89,6 @@ export function useChat() {
     listenToChatMessage,
     clearConversationId,
     addHumanMessageToMessages,
+    clearMessages,
   };
 }
