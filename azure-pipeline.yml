@@ -20,4 +20,4 @@ steps:
       app_location: '/'
       app_build_command: 'yarn run generate'
       output_location: '/.output/public'
-      azure_static_web_apps_api_token: $(deployment_token)
+      azure_static_web_apps_api_token: $(ENV_DEPLOYMENT_TOKEN)
