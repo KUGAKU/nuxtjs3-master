@@ -1,6 +1,9 @@
 <template>
   <div class="bg-grey-darken-4 pt-4 pr-4 pb-4 pl-4">
-    <p class="limited-width" v-text="message"></p>
+    <p
+      class="limited-width"
+      v-text="message"
+    />
   </div>
 </template>
 

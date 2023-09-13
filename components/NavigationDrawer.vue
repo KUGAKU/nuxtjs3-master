@@ -1,12 +1,19 @@
 <template>
-  <v-navigation-drawer v-model="drawer" location="left" temporary app>
+  <v-navigation-drawer
+    v-model="drawer"
+    location="left"
+    temporary
+    app
+  >
     <div class="d-flex flex-column space-between">
-      <v-btn @click="createNewChat">New Chat</v-btn>
+      <v-btn @click="createNewChat">
+        New Chat
+      </v-btn>
     </div>
-    <v-list :items="items"></v-list>
+    <v-list :items="items" />
   </v-navigation-drawer>
   <v-app-bar app>
-    <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="drawer = !drawer" />
 
     <v-toolbar-title>Enterprise Chat</v-toolbar-title>
   </v-app-bar>

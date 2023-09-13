@@ -1,12 +1,15 @@
 <template>
   <v-footer app>
     <v-text-field
+      v-model="message"
       hide-details="auto"
       class="mr-6"
-      v-model="message"
       @keypress.enter.exact="sendMessage"
-    ></v-text-field>
-    <v-btn icon="$vuetify" @click="sendMessage"></v-btn>
+    />
+    <v-btn
+      icon="$vuetify"
+      @click="sendMessage"
+    />
   </v-footer>
 </template>
 

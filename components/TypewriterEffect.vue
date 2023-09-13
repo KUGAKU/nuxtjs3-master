@@ -1,5 +1,7 @@
 <template>
-  <div class="break-word limited-width">{{ displayedText }}</div>
+  <div class="break-word limited-width">
+    {{ displayedText }}
+  </div>
 </template>
 
 <script setup lang="ts">

@@ -1,12 +1,11 @@
 <template>
-  <template v-for="message in messages">
-    <template v-if="message.messageType == MessageType.HUMAN">
-      <HumanMessage :message="message.messageContent" />
-    </template>
-    <template v-else>
-      <AIMessage :message="message.messageContent" />
-    </template>
-  </template>
+  <div v-for="(message, index) in messages" :key="index">
+    <HumanMessage
+      v-if="message.messageType == MessageType.HUMAN"
+      :message="message.messageContent"
+    />
+    <AIMessage v-else :message="message.messageContent" />
+  </div>
 </template>
 
 <script setup lang="ts">
