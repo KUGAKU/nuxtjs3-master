@@ -6,10 +6,7 @@
       class="mr-6"
       @keypress.enter.exact="sendMessage"
     />
-    <v-btn
-      icon="$vuetify"
-      @click="sendMessage"
-    />
+    <v-btn icon="$vuetify" @click="sendMessage" />
   </v-footer>
 </template>
 

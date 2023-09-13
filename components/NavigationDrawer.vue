@@ -1,14 +1,7 @@
 <template>
-  <v-navigation-drawer
-    v-model="drawer"
-    location="left"
-    temporary
-    app
-  >
+  <v-navigation-drawer v-model="drawer" location="left" temporary app>
     <div class="d-flex flex-column space-between">
-      <v-btn @click="createNewChat">
-        New Chat
-      </v-btn>
+      <v-btn @click="createNewChat"> New Chat </v-btn>
     </div>
     <v-list :items="items" />
   </v-navigation-drawer>
