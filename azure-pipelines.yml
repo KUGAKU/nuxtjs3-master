@@ -1,0 +1,23 @@
+trigger:
+  - develop
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  NUXT_PUBLIC_TYPEWRITING_SPEED: $(ENV_NUXT_PUBLIC_TYPEWRITING_SPEED)
+  NUXT_PUBLIC_BACKEND_API_BASE_URL: $(ENV_NUXT_PUBLIC_BACKEND_API_BASE_URL)
+  NUXT_PUBLIC_AADB2C_CLIENT_ID: $(ENV_NUXT_PUBLIC_AADB2C_CLIENT_ID)
+  NUXT_PUBLIC_AADB2C_AUTHORITY: $(ENV_NUXT_PUBLIC_AADB2C_AUTHORITY)
+  NUXT_PUBLIC_AADB2C_AUTHORITY_DOMAIN: $(ENV_NUXT_PUBLIC_AADB2C_AUTHORITY_DOMAIN)
+  NUXT_PUBLIC_AADB2C_REDIRECT_URI: $(ENV_NUXT_PUBLIC_AADB2C_REDIRECT_URI)
+  NUXT_PUBLIC_AADB2C_SCOPE: $(ENV_NUXT_PUBLIC_AADB2C_SCOPE)
+
+steps:
+  # Build and deploy
+  - task: AzureStaticWebApp@0
+    inputs:
+      app_location: '/'
+      app_build_command: 'yarn run generate'
+      output_location: '/.output/public'
+      azure_static_web_apps_api_token: $(deployment_token)
