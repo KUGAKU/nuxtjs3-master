@@ -34,7 +34,6 @@ export class ChatRepository implements IChatRepository {
   ) {
     const { accessToken } = useAuth();
     const runtimeConfig = useRuntimeConfig();
-    console.log(runtimeConfig.public.backendApiBaseUrl);
     fetchEventSource(`${runtimeConfig.public.backendApiBaseUrl}chat/`, {
       method: 'POST',
       headers: {

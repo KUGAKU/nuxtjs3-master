@@ -1,12 +1,13 @@
 <template>
-  <div />
+  <Messages :messages="messages" />
 </template>
 
 <script setup lang="ts">
 import auth from '../middleware/auth';
 
 definePageMeta({
-  layout: false,
   middleware: auth,
 });
+
+const { messages } = useChat();
 </script>
