@@ -77,26 +77,5 @@ export class ChatRepository implements IChatRepository {
         throw err;
       },
     });
-
-    // eventSource.onopen = (event) => {
-    //   console.info('EventSource Connection Opened:', event);
-    // };
-    // eventSource.addEventListener(ChatSSEEvent.PROGRESSION, (event) => {
-    //   const data: ChatSSEData = JSON.parse(event.data);
-    //   chatMessageDataSource.pushData(data);
-    // });
-    // eventSource.addEventListener(ChatSSEEvent.COMPLETE, (event) => {
-    //   console.info('EventSource Complete:', event);
-    //   const data: ChatSSEData = JSON.parse(event.data);
-    //   chatMessageDataSource.pushData(data);
-    //   chatMessageDataSource.complete();
-    //   eventSource.close();
-    //   return;
-    // });
-    // eventSource.onerror = (err) => {
-    //   console.error('EventSource Error:', err);
-    //   chatMessageDataSource.complete();
-    //   eventSource.close();
-    // };
   }
 }
