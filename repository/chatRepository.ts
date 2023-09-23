@@ -56,13 +56,11 @@ export class ChatRepository implements IChatRepository {
       },
 
       onmessage(event) {
-        //console.info('event:', event);
         const data: ChatSSEData = JSON.parse(event.data);
         if (event.event === ChatSSEEvent.COMPLETE) {
           console.info('fetchEventSource Complete:', event);
           chatMessageDataSource.pushData(data);
           chatMessageDataSource.complete();
-          // TODO: ここでeventSource.close()のような処理を行う。
           return;
         }
 
@@ -72,7 +70,7 @@ export class ChatRepository implements IChatRepository {
       },
 
       onerror(err) {
-        console.error('fetchEventSource Error:', err);
+        console.error(`fetchEventSource Error: ${JSON.stringify(err)}`);
         chatMessageDataSource.complete();
         throw err;
       },
