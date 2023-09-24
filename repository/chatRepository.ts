@@ -9,10 +9,10 @@ import { useAuth } from '../composables/useAuth';
 enum ChatSSEEvent {
   PROGRESSION = 'progression', // SSEによってチャットメッセージを送信している事を示します。
   COMPLETE = 'complete', // SSEによってチャットメッセージの送信が完了した事を示します。
-  ERROR = 'error', // SSEによってチャットメッセージの送信が失敗した事を示します。
+  ERROR = 'error', // 接続中のstream内でエラーが発生した場合にErrorメッセージが返されます。
 }
 
-export interface ChatSSEData {
+export interface ProgressionSSEData {
   readonly chat_content: string;
   readonly conversation_id: string | null;
 }
@@ -56,20 +56,27 @@ export class ChatRepository implements IChatRepository {
       },
 
       onmessage(event) {
-        const data: ChatSSEData = JSON.parse(event.data);
         if (event.event === ChatSSEEvent.COMPLETE) {
           console.info('fetchEventSource Complete:', event);
-          chatMessageDataSource.pushData(data);
           chatMessageDataSource.complete();
           return;
         }
 
         if (event.event === ChatSSEEvent.PROGRESSION) {
+          const data: ProgressionSSEData = JSON.parse(event.data);
           chatMessageDataSource.pushData(data);
+          return;
+        }
+
+        if (event.event === ChatSSEEvent.ERROR) {
+          console.error('fetchEventSource Error:', event);
+          chatMessageDataSource.complete();
+          throw new Error(event.data);
         }
       },
 
       onerror(err) {
+        // onerrorイベントは、ネットワークの切断された場合、Server Sent Event形式のデータが正しくない場合、接続中のStream内で返却されたErrorメッセージから返された例外がある場合にのみ発生します。
         console.error(`fetchEventSource Error: ${JSON.stringify(err)}`);
         chatMessageDataSource.complete();
         throw err;

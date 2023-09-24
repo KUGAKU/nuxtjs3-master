@@ -68,9 +68,6 @@ export function useChat() {
           isLoading.value = false;
         },
       });
-      // const eventSource = new EventSource(
-      //   `${runtimeConfig.public.backendApiBaseUrl}chat/?conversation_id=${conversationId.value}&chat_message=${chatMessage}`
-      // );
       chatRepository.listenToSSEChatMessage(
         chatMessage,
         chatMessageDataSource,
